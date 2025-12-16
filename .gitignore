@@ -175,3 +175,5 @@ yap_testing
 html/img/img//static/
 /blogicum/static/
 db.sqlite3
+blogicum/static/css/
+tests/
