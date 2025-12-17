@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
+
 from .models import Post, Category
 
 
@@ -11,14 +12,14 @@ def index(request):
     # Текущее время для проверки даты публикации
     current_time = timezone.now()
 
-    post_list = Post.objects.filter(
+    posts = Post.objects.filter(
         is_published=True,
         pub_date__lte=current_time,
         category__is_published=True
     ).select_related('category', 'location', 'author') \
      .order_by('-pub_date')[:5]
 
-    return render(request, 'blog/index.html', {'posts': post_list})
+    return render(request, 'blog/index.html', {'posts': posts})
 
 
 def post_detail(request, post_id):
@@ -47,7 +48,7 @@ def category_posts(request, category_slug):
     )
 
     # Получаем посты для этой категории
-    post_list = Post.objects.filter(
+    posts = Post.objects.filter(
         category=category,
         is_published=True,
         pub_date__lte=current_time
@@ -56,5 +57,5 @@ def category_posts(request, category_slug):
     return render(
         request,
         'blog/category.html',
-        {'category': category, 'posts': post_list}
+        {'category': category, 'posts': posts}
     )
