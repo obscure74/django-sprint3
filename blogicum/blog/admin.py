@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Post, Category, Location
+
+from .models import Category, Location, Post
 
 
 @admin.register(Post)
@@ -11,7 +12,6 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ('category', 'is_published', 'pub_date')
     search_fields = ('title', 'text')
     list_per_page = 20
-    ordering = ('-pub_date',)
 
 
 @admin.register(Category)
